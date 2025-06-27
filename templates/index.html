@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Watermark Image</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="header">
+        <a href="/">Image Watermarking & Detection</a>
+    </div>
+
+    <div class="container">
+        <div class="form-container">
+            <h3>Upload Image to Watermark</h3>
+            <form action="/" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" required>
+                <input type="submit" value="Upload Image">
+            </form>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        </div>
+
+        {% if watermarked_img %}
+        <div class="result-section">
+            <h3>Watermarked Image</h3>
+            <div class="metrics">
+                <div>
+                    <h4>PSNR</h4>
+                    <p>{{ psnr }}</p>
+                </div>
+                <div>
+                    <h4>SSIM</h4>
+                    <p>{{ ssim }}</p>
+                </div>
+               
+            </div>
+            <div class="image-display">
+                <div>
+                    <h4>Original Image</h4>
+                    <img src="{{ url_for('static', filename='outputs/' + orig_img) }}" alt="Original Image">
+                </div>
+                <div>
+                    <h4>Watermarked Image</h4>
+                    <img src="{{ url_for('static', filename='outputs/' + watermarked_img) }}" alt="Watermarked Image">
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Button to go to detect page -->
+        <div class="button-container">
+            <a href="{{ url_for('detect') }}">
+                <button class="btn">Go to Detect Watermark</button>
+            </a>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>Image Watermarking &copy; 2025</p>
+    </div>
+</body>
+</html>
